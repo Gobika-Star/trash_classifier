@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Classification Result</h1>
+        <div class="text-center">
+            <img src="{{ url_for('display_image', filename=filename) }}" alt="Uploaded Image" class="preview img-fluid">
+            <h2 class="result mt-3">Predicted: {{ result }} ({{ tamil_names[result] }}) – {{ "%.0f"|format(confidence * 100) }}% confident</h2>
+            <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg mt-3">🔙 Try Again</a>
+        </div>
+        {% if predictions %}
+        <div class="mt-5">
+            <h3>Last 5 Predictions</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Predicted Class</th>
+                        <th>Confidence</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pred in predictions %}
+                    <tr>
+                        <td>{{ pred.filename }}</td>
+                        <td>{{ pred.predicted_class }}</td>
+                        <td>{{ "%.2f"|format(pred.confidence * 100) }}%</td>
+                        <td>{{ pred.timestamp }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+    <footer class="text-center mt-5">
+        <p>Developed by Gobika | AI/ML Project</p>
+    </footer>
+</body>
+</html>

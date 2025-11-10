@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Classifier using AI/ML</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="logo">♻️ ECOSORT AI</h1>
+            <p class="description">Upload or capture an image to classify waste into categories: Plastic, Paper, Glass, Metal, Organic, Other.</p>
+        </div>
+        <div class="mb-3">
+            <button type="button" id="camera-btn" class="btn btn-primary">📷 Open Camera</button>
+            <button type="button" id="capture-btn" class="btn btn-secondary" style="display:none;">Capture Photo</button>
+        </div>
+        <video id="video" width="300" height="200" autoplay style="display:none; border: 1px solid #ccc;"></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="mb-3">
+                <input type="file" name="file" accept="image/*" required class="form-control" id="file-input">
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Classify Waste</button>
+        </form>
+    </div>
+    <footer class="text-center mt-5">
+        <p>Developed by Gobika | AI/ML Project</p>
+    </footer>
+    <script>
+        const cameraBtn = document.getElementById('camera-btn');
+        const captureBtn = document.getElementById('capture-btn');
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const fileInput = document.getElementById('file-input');
+
+        cameraBtn.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                captureBtn.style.display = 'inline-block';
+                cameraBtn.style.display = 'none';
+            } catch (err) {
+                alert('Error accessing camera: ' + err.message);
+            }
+        });
+
+        captureBtn.addEventListener('click', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            canvas.toBlob((blob) => {
+                const file = new File([blob], 'captured.jpg', { type: 'image/jpeg' });
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                fileInput.files = dt.files;
+                // Stop stream
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.style.display = 'none';
+                captureBtn.style.display = 'none';
+                cameraBtn.style.display = 'inline-block';
+            });
+        });
+    </script>
+</body>
+</html>
