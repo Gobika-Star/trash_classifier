@@ -1,0 +1,12 @@
+filename,predicted_class,confidence,timestamp
+IMG_20250120_WA0001TPPLCZ.jpg,Paper,0.21112056,2025-10-12 15:06:36
+document_1.jpg,Paper,0.21158415,2025-10-12 15:06:59
+Others_11874531_293752335YN4CX5.jpg,Plastic,0.5893949,2025-10-12 19:10:46
+Others_11874531_293752335YN4CX5.jpg,Plastic,0.5893949,2025-10-12 19:18:35
+captured.jpg,Plastic,0.5979961,2025-10-12 20:53:07
+passpoertphoto.jpeg,Plastic,0.62357754,2025-10-15 11:13:58
+passpoertphoto.jpeg,Plastic,0.62357754,2025-10-15 11:14:08
+passpoertphoto.jpeg,Plastic,0.62357754,2025-10-15 11:14:13
+passpoertphoto.jpeg,Plastic,0.62357754,2025-10-15 13:16:12
+captured.jpg,Plastic,0.5979961,2025-11-09 15:54:17
+captured.jpg,Plastic,0.5303216,2025-11-09 16:05:54
